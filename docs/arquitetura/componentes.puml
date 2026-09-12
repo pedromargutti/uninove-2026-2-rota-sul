@@ -1,0 +1,27 @@
+@startuml
+title Componentes da Rota Sul
+
+component "Recebimento de pedidos" as pedidos
+component "Montagem de remessas" as expedicao
+component "Rastreamento e ocorrências" as rastreamento
+component "Integração com parceiros" as parceiros
+
+interface "receberPedidoValidado" as iPedido
+interface "registrarEvento" as iEvento
+interface "despacharUltimaMilha" as iUltimaMilha
+interface "confirmarEntregaParceiro" as iConfirmacao
+
+expedicao -up- iPedido
+pedidos --( iPedido
+
+rastreamento -up- iEvento
+expedicao --( iEvento
+parceiros --( iEvento
+
+parceiros -up- iUltimaMilha
+expedicao --( iUltimaMilha
+
+rastreamento -up- iConfirmacao
+parceiros --( iConfirmacao
+
+@enduml

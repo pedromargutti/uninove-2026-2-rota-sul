@@ -1,0 +1,27 @@
+@startuml
+title Implantação da Rota Sul
+
+node "Estação do atendente e do expedidor" as estacao <<device>> {
+  artifact "Navegador" as navegador
+}
+
+node "Dispositivo móvel do motorista" as celular <<device>> {
+  artifact "Aplicativo de rota" as appRota
+}
+
+node "Servidor de aplicação" as servidorApp <<server>> {
+  artifact "rotasul.jar, Spring Boot" as aplicacao
+}
+
+node "Servidor de banco de dados" as servidorBanco <<server>> {
+  database "MySQL 8.4, schema rotasul" as banco
+}
+
+node "Sistema do parceiro, fora da Rota Sul" as sistemaParceiro <<externo>>
+
+navegador --> aplicacao : HTTP, síncrono
+appRota --> aplicacao : HTTP, síncrono
+aplicacao --> banco : JDBC, síncrono
+aplicacao --> sistemaParceiro : integração, assíncrono
+
+@enduml

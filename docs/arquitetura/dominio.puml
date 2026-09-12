@@ -1,0 +1,74 @@
+@startuml
+
+title Classes do domínio da Rota Sul
+
+class Cliente {
+  +Long id
+  +String nome
+  +String documento
+  +String telefone
+}
+
+class Pedido {
+  +Long id
+  +LocalDateTime criadoEm
+  +String situacao
+}
+
+class Remessa {
+  +Long id
+  +String codigoRastreio
+  +LocalDate previsaoEntrega
+}
+
+class Volume {
+  +Long id
+  +BigDecimal pesoKg
+  +String etiqueta
+}
+
+class Rota {
+  +Long id
+  +String origem
+  +String destino
+  +LocalDate dataSaida
+}
+
+class Veiculo {
+  +Long id
+  +String placa
+  +String tipo
+  +BigDecimal capacidadeKg
+}
+
+class Motorista {
+  +Long id
+  +String nome
+  +String cnh
+  +String telefone
+}
+
+class Ocorrencia {
+  +Long id
+  +String tipo
+  +LocalDateTime registradaEm
+  +String descricao
+}
+
+class Parceiro {
+  +Long id
+  +String razaoSocial
+  +String areaCobertura
+}
+
+Cliente "1" -- "0..*" Pedido : faz
+Pedido "1" -- "1..*" Remessa : gera
+Remessa "1" -- "1..*" Volume : contém
+Remessa "0..*" -- "1" Rota : segue
+Rota "1" -- "1" Veiculo : utiliza
+Rota "1" -- "1" Motorista : conduzida por
+Remessa "1" -- "0..*" Ocorrencia : registra
+Volume "1" -- "0..*" Ocorrencia : registra
+Parceiro "1" -- "0..*" Remessa : entrega na última milha
+
+@enduml
